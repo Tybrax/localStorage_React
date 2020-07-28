@@ -1,23 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+
+  const [value, setValue] = useState(
+      localStorage.getItem('localStorageValue') || ''
+    );
+
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("localStorageValue", value);
+  }, [value]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <input value={value} type="text" onChange={onChange} />
+        <p>{value}</p>
       </header>
     </div>
   );
